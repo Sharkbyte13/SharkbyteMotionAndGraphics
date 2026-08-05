@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Film & Video | SharkByte Design</title>
+  <meta name="description" content="Film and video work by SharkByte Design." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-brand" href="index.html" aria-label="Return to home">
+      <img class="logo-img" src="assets/logo.png" alt="SharkByte Design" />
+      <img class="shark-gif" src="assets/shark.gif" alt="" aria-hidden="true" />
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html#home">Surface</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="content-section reveal">
+      <p class="section-eyebrow">Work</p>
+      <h2>Film &amp; Video</h2>
+      <p>
+        This section is now wired into the same site shell as the rest of the portfolio so it inherits the header,
+        footer, typography, and responsive behavior from the base layout.
+      </p>
+      <p>
+        Use this page as the landing view for motion, direction, and edit-focused case studies.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> SharkByte Design — All rights reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mainNav.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 760) {
+            mainNav.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>

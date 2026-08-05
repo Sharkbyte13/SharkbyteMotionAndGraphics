@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Illustration & Photoshop | SharkByte Design</title>
+  <meta name="description" content="Illustration and Photoshop work by SharkByte Design." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <a class="header-brand" href="index.html" aria-label="Return to home">
+      <img class="logo-img" src="assets/logo.png" alt="SharkByte Design" />
+      <img class="shark-gif" src="assets/shark.gif" alt="" aria-hidden="true" />
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#home">Surface</a></li>
+        <li><a href="#about">About</a></li>
+        <li class="dropdown-parent"><a href="#work" class="dropdown-toggle">Work ▾</a>
+          <!-- Actual Dropdown Menu -->
+          <ul class="dropdown-menu">
+            <li><a href="illustrationAndPhotoshop.html">Illustration & Photoshop</a></li>
+            <li><a href="uIUX.html">UI/UX</a></li>
+            <li><a href="filmAndVideo.html">Film & Video</a></li>
+          </ul>
+        </li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <button class="top-buffer-hint" id="topBufferHint" type="button" aria-label="Go to the space layer">
+    <span>Up</span>
+    <div class="arrow" aria-hidden="true"></div>
+  </button>
+
+  <!-- DEPTH METER -->
+  <div class="depth-meter" aria-hidden="true">
+    <div class="depth-dot active" data-target="home"></div>
+    <div class="depth-bar"></div>
+    <div class="depth-dot" data-target="about"></div>
+    <div class="depth-bar"></div>
+    <div class="depth-dot" data-target="work"></div>
+    <div class="depth-bar"></div>
+    <div class="depth-dot" data-target="contact"></div>
+  </div>
+
+  <main>
+    <section class="content-section reveal">
+      <p class="section-eyebrow">Work</p>
+      <h2>Illustration &amp; Photoshop</h2>
+      <p>
+        This section is now wired into the same site shell as the rest of the portfolio so it inherits the header,
+        footer, typography, and responsive behavior from the base layout.
+      </p>
+      <p>
+        Use this page as the landing view for your illustration and Photoshop case studies, with room for project
+        thumbnails, captions, or narrative copy.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> SharkByte Design — All rights reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mainNav.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 760) {
+            mainNav.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
