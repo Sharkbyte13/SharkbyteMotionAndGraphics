@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Illustration & Photoshop | SharkByte Design</title>
   <meta name="description" content="Illustration and Photoshop work by SharkByte Design." />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
   <!-- HEADER -->
@@ -23,24 +23,27 @@
 
     <nav class="main-nav" id="site-nav" aria-label="Primary">
       <ul>
-        <li><a href="#home">Surface</a></li>
-        <li><a href="#about">About</a></li>
-        <li class="dropdown-parent"><a href="#work" class="dropdown-toggle">Work ▾</a>
+        <li><a href="index.html#home">Surface</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li class="dropdown-parent">
+          <a href="index.html#work" class="dropdown-toggle">Work <span class="work-caret" aria-hidden="true">▴</span></a>
           <!-- Actual Dropdown Menu -->
           <ul class="dropdown-menu">
-            <li><a href="illustrationAndPhotoshop.html">Illustration & Photoshop</a></li>
-            <li><a href="uIUX.html">UI/UX</a></li>
-            <li><a href="filmAndVideo.html">Film & Video</a></li>
+            <li><a href="illustrationAndPhotoshop.html">Illustration &amp; Photoshop</a></li>
+            <li><a href="uiux.html">UI/UX</a></li>
+            <li><a href="filmAndVideo.html">Film &amp; Video</a></li>
           </ul>
         </li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <button class="top-buffer-hint" id="topBufferHint" type="button" aria-label="Go to the space layer">
-    <span>Up</span>
-    <div class="arrow" aria-hidden="true"></div>
+    <span>see what's above the clouds</span>
+    <div class="arrow-wrap">
+      <div class="arrow" aria-hidden="true"></div>
+    </div>
   </button>
 
   <!-- DEPTH METER -->
@@ -66,6 +69,46 @@
         Use this page as the landing view for your illustration and Photoshop case studies, with room for project
         thumbnails, captions, or narrative copy.
       </p>
+
+      <section class="work-slab">
+        <div class="work-grid">
+          <article class="work-card reveal">
+            <div class="work-card__image">
+              <span class="work-card__placeholder">Project One</span>
+            </div>
+            <div class="work-card__body">
+              <span class="work-card__label">Case Study</span>
+              <h3>Project One</h3>
+              <p>Frame the illustration brief, visual direction, and creative refinement.</p>
+              <a class="work-card__link" href="#">Read project</a>
+            </div>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="work-card__image">
+              <span class="work-card__placeholder">Project Two</span>
+            </div>
+            <div class="work-card__body">
+              <span class="work-card__label">Case Study</span>
+              <h3>Project Two</h3>
+              <p>Explain the style direction, tools, and final production output.</p>
+              <a class="work-card__link" href="#">Read project</a>
+            </div>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="work-card__image">
+              <span class="work-card__placeholder">Project Three</span>
+            </div>
+            <div class="work-card__body">
+              <span class="work-card__label">Case Study</span>
+              <h3>Project Three</h3>
+              <p>Record your next visual campaign, art direction, or image treatment.</p>
+              <a class="work-card__link" href="#">Read project</a>
+            </div>
+          </article>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -78,6 +121,8 @@
 
     const menuToggle = document.querySelector('.menu-toggle');
     const mainNav = document.querySelector('.main-nav');
+    const dropdownParent = document.querySelector('.dropdown-parent');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
 
     if (menuToggle && mainNav) {
       menuToggle.addEventListener('click', () => {
@@ -86,12 +131,29 @@
       });
 
       mainNav.querySelectorAll('a').forEach(link => {
+        if (link.classList.contains('dropdown-toggle')) {
+          return;
+        }
+
         link.addEventListener('click', () => {
           if (window.innerWidth <= 760) {
             mainNav.classList.remove('is-open');
             menuToggle.setAttribute('aria-expanded', 'false');
           }
         });
+      });
+    }
+
+    if (dropdownParent && dropdownToggle) {
+      dropdownToggle.setAttribute('aria-haspopup', 'true');
+      dropdownToggle.setAttribute('aria-expanded', 'false');
+
+      dropdownToggle.addEventListener('click', (event) => {
+        if (window.innerWidth > 760) return;
+
+        event.preventDefault();
+        const isOpen = dropdownParent.classList.toggle('is-open');
+        dropdownToggle.setAttribute('aria-expanded', String(isOpen));
       });
     }
 
