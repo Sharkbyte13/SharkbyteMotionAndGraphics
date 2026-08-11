@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SharkByte Design</title>
   <meta name="description" content="Dive into what design can look like for you." />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
     .layer-minus-one {
       position: relative;
@@ -323,6 +323,7 @@
       display: inline-flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 0.4rem;
       padding: 0.45rem 0.7rem;
       border: 0;
@@ -337,9 +338,18 @@
       transition: opacity 0.25s ease;
     }
 
+    .top-buffer-hint .arrow-wrap {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .top-buffer-hint .arrow {
       width: 16px;
       height: 16px;
+      margin-inline: auto;
       border-right: 1.5px solid currentColor;
       border-bottom: 1.5px solid currentColor;
       transform: rotate(225deg);
@@ -348,6 +358,26 @@
     .top-buffer-hint.is-hidden {
       opacity: 0;
       pointer-events: none;
+    }
+
+    .space-buffer-overlay {
+      position: fixed;
+      inset: -10%;
+      z-index: 500;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(0,0,0,0.88) 25%, #000 100%);
+    }
+
+    body.space-buffer-active .space-buffer-overlay {
+      pointer-events: auto;
+      animation: spaceBufferFade 650ms ease forwards;
+    }
+
+    @keyframes spaceBufferFade {
+      0% { opacity: 0; }
+      35% { opacity: 1; }
+      100% { opacity: 1; }
     }
 
     body.space-buffer-active {
@@ -370,6 +400,7 @@
   </style>
 </head>
 <body>
+  <div class="page-transition-overlay" aria-hidden="true"></div>
 
   <!-- HEADER -->
   <header class="site-header">
@@ -388,22 +419,19 @@
       <ul>
         <li><a href="#home">Surface</a></li>
         <li><a href="#about">About</a></li>
-        <li class="dropdown-parent"><a href="#work" class="dropdown-toggle">Work ▾</a>
-          <!-- Actual Dropdown Menu -->
-          <ul class="dropdown-menu">
-            <li><a href="illustrationAndPhotoshop.html">Illustration & Photoshop</a></li>
-            <li><a href="uIUX.html">UI/UX</a></li>
-            <li><a href="filmAndVideo.html">Film & Video</a></li>
-          </ul>
-        </li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
   </header>
 
+  <div class="space-buffer-overlay" aria-hidden="true"></div>
+
   <button class="top-buffer-hint" id="topBufferHint" type="button" aria-label="Go to the space layer">
-    <span>Up</span>
-    <div class="arrow" aria-hidden="true"></div>
+    <span>see what's above the clouds</span>
+    <div class="arrow-wrap">
+      <div class="arrow" aria-hidden="true"></div>
+    </div>
   </button>
 
   <!-- DEPTH METER -->
@@ -420,6 +448,7 @@
   <!-- ============================================================
        LAYER -1: ABOUT SPACE
        ============================================================ -->
+  <!--
   <section class="layer layer-minus-one reveal" id="space-story">
     <canvas id="starfield" aria-hidden="true"></canvas>
 
@@ -505,6 +534,7 @@
       </div>
     </div>
   </section>
+  -->
 
   <!-- ============================================================
        LAYER 0: SURFACE / HOME
@@ -544,7 +574,9 @@
 
     <button class="scroll-hint" id="scrollHint" type="button" aria-label="Move to next section">
       <span class="scroll-hint-text">Dive in</span>
-      <div class="arrow" aria-hidden="true"></div>
+      <div class="arrow-wrap">
+        <div class="arrow" aria-hidden="true"></div>
+      </div>
     </button>
   </section>
 
@@ -861,6 +893,7 @@
 
     const homeSection = document.getElementById('home');
     const homeScrollHint = document.getElementById('scrollHint');
+    const topBufferHint = document.getElementById('topBufferHint');
     const headerShark = document.querySelector('.header-brand .shark-gif');
 
     if (headerShark && homeSection) {
@@ -887,43 +920,13 @@
       history.replaceState(null, '', `${location.pathname}#home`);
     }
 
-    let bufferUnlocked = false;
-
-    const clampToHome = () => {
-      if (!homeSection || bufferUnlocked) return;
-      const homeTop = homeSection.offsetTop;
-      if (window.scrollY < homeTop) {
-        window.scrollTo({ top: homeTop, behavior: 'auto' });
-        topBufferHint?.classList.remove('is-hidden');
-      }
-    };
-
-    if (homeSection && spaceStory && topBufferHint) {
-      document.body.classList.add('space-buffer-active');
-      topBufferHint.classList.remove('is-hidden');
-
+    if (topBufferHint) {
       topBufferHint.addEventListener('click', () => {
-        bufferUnlocked = true;
-        document.body.classList.remove('space-buffer-active');
-        spaceStory.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.body.classList.add('space-buffer-active');
+        window.setTimeout(() => {
+          window.location.href = 'about-space.html';
+        }, 420);
       });
-
-      const layerVisibilityObserver = new IntersectionObserver((entries) => {
-        const visible = entries.some((entry) => entry.isIntersecting);
-        topBufferHint.classList.toggle('is-hidden', !visible);
-      }, { threshold: 0.4 });
-
-      layerVisibilityObserver.observe(homeSection);
-      layerVisibilityObserver.observe(spaceStory);
-
-      window.addEventListener('scroll', clampToHome, { passive: true });
-
-      window.addEventListener('wheel', () => {
-        if (!bufferUnlocked && window.scrollY <= homeSection.offsetTop + 20) {
-          bufferUnlocked = true;
-          document.body.classList.remove('space-buffer-active');
-        }
-      }, { passive: true });
     }
   </script>
 
