@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Space | SharkByte Design</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --grey: #d6e7e8;
+      --blue: #3fa9d0;
+      --sand: #f5e6b3;
+      --white: #f8fbfc;
+      --star-gold: #f5e6b3;
+      --deep: #07101f;
+      --font-ui: "Arial", "Avenir", sans-serif;
+      --font-body: Georgia, serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: #03050b;
+      color: var(--white);
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(180deg, rgba(3,5,11,0.9), rgba(3,5,11,0.75));
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .header-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .header-brand .logo-img { height: 44px; width: auto; }
+    .header-brand .shark-gif { height: 48px; width: auto; }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav a {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(240,244,247,0.75);
+      text-decoration: none;
+    }
+
+    .main-nav a:hover { color: var(--blue); }
+
+    .space-page {
+      position: relative;
+      min-height: 100vh;
+      padding-top: 7rem;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top, rgba(76,116,182,0.45), transparent 38%),
+        linear-gradient(180deg, #07101f 0%, #03050b 100%);
+    }
+
+    .space-page canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .space-page__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .space-page__inner h1 {
+      font-family: var(--font-ui);
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      line-height: 1.05;
+      color: var(--star-gold);
+      margin-bottom: 1rem;
+    }
+
+    .space-page__inner p {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: rgba(240,244,247,0.72);
+    }
+
+    .star-divider {
+      margin: 2rem 0;
+      text-align: center;
+      color: var(--star-gold);
+    }
+
+    .return-section {
+      margin-top: 2rem;
+    }
+
+    .btn-return {
+      display: inline-block;
+      border: 1px solid rgba(63,169,208,0.4);
+      border-radius: 4px;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .btn-return:hover {
+      background: rgba(63,169,208,0.1);
+      color: var(--white);
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      padding: 1rem 2rem;
+      background: #03050b;
+      text-align: center;
+      color: rgba(240,244,247,0.72);
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-brand" href="index.html" aria-label="Return to home">
+      <img class="logo-img" src="assets/logo.png" alt="SharkByte Design" />
+      <img class="shark-gif" src="assets/shark.gif" alt="" aria-hidden="true" />
+    </a>
+
+    <nav class="main-nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html#home">Surface</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="space-page">
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <div class="space-page__inner">
+      <p class="section-eyebrow" style="font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 0.18em; color: var(--blue);">The Other Side of the Universe</p>
+      <h1>The Other Side<br/>of the <em>Universe</em></h1>
+      <p>
+        Most designers don't spend their evenings analysing stellar photometry or modelling quantum systems. Here's why that changes everything about how I design.
+      </p>
+
+      <div class="star-divider">✦</div>
+
+      <p>
+        Design was never the detour. It was the other current running underneath. Both disciplines ask the same fundamental question: how do you take something complex and render it clear?
+      </p>
+
+      <div class="star-divider">✦</div>
+
+      <p>
+        Physics trains you to distrust shortcuts. When you've spent time verifying that a signal is real and not an artifact of your reduction pipeline, you develop a healthy skepticism of the first answer — in science and in design.
+      </p>
+
+      <div class="return-section">
+        <a class="btn-return" href="index.html#home">← Dive back into the portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> SharkByte Design — All rights reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const starfield = document.getElementById('starfield');
+    if (starfield) {
+      const ctx = starfield.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      let W = 0;
+      let H = 0;
+      let stars = [];
+
+      function resizeStarfield() {
+        W = starfield.width = Math.round(window.innerWidth * dpr);
+        H = starfield.height = Math.round(window.innerHeight * dpr);
+        starfield.style.width = window.innerWidth + 'px';
+        starfield.style.height = window.innerHeight + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        stars = Array.from({ length: 220 }, () => ({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: Math.random() * 1.4 + 0.3,
+          base: Math.random() * 0.7 + 0.2,
+          phase: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.4 + 0.2,
+          gold: Math.random() < 0.08
+        }));
+      }
+
+      function drawStarfield(t) {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        stars.forEach(s => {
+          const alpha = s.base + Math.sin(t * s.speed + s.phase) * 0.25;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = s.gold
+            ? `rgba(245,230,176,${alpha})`
+            : `rgba(200,220,240,${alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStarfield);
+      }
+
+      window.addEventListener('resize', resizeStarfield);
+      resizeStarfield();
+      requestAnimationFrame(drawStarfield);
+    }
+  </script>
+</body>
+</html>

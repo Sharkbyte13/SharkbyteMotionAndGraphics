@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SharkByte Design</title>
+  <meta name="description" content="Dive into what design can look like for you." />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .layer-minus-one {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top, rgba(76, 116, 182, 0.45), transparent 38%),
+        linear-gradient(180deg, #07101f 0%, #03050b 100%);
+      color: var(--white);
+      perspective: 1200px;
+    }
+
+    .layer-minus-one__flip {
+      position: relative;
+      z-index: 1;
+      transform-style: preserve-3d;
+      transform: rotateX(180deg) translateY(24px);
+      backface-visibility: hidden;
+    }
+
+    .layer-minus-one.is-visible .layer-minus-one__flip {
+      transform: rotateX(0deg) translateY(0);
+    }
+
+    .layer-minus-one #starfield {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .layer-minus-one__content {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 8rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 2rem;
+    }
+
+    .layer-minus-one__content h2 {
+      font-family: var(--font-ui);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: var(--star-gold);
+    }
+
+    .layer-minus-one__content p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(240, 244, 247, 0.72);
+      margin-bottom: 1.2rem;
+    }
+
+    .layer-minus-one__content strong {
+      color: var(--white);
+      font-style: italic;
+    }
+
+    .layer-minus-one__card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .space-hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 2rem 4rem;
+    }
+
+    .space-hero h1 {
+      font-family: var(--font-ui);
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--star-gold);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .space-hero h1 em { color: var(--blue); font-style: normal; }
+
+    .space-hero .subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(240, 244, 247, 0.55);
+      font-style: italic;
+      max-width: 50ch;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    .nebula-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse at center,
+        rgba(100, 40, 200, 0.12) 0%,
+        rgba(63, 169, 208, 0.07) 40%,
+        transparent 70%);
+      pointer-events: none;
+      animation: breathe 10s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+    }
+
+    .scroll-hint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(245, 230, 176, 0.45);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      animation: bob 2.5s ease-in-out infinite;
+    }
+
+    .scroll-hint .arrow {
+      width: 16px;
+      height: 16px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(7px); }
+    }
+
+    .content-section,
+    .bridge,
+    .return-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+
+    .content-section h2 {
+      font-family: var(--font-ui);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--star-gold);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .content-section p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(240, 244, 247, 0.72);
+      margin-bottom: 1.2rem;
+    }
+
+    .content-section p strong {
+      color: var(--white);
+      font-weight: normal;
+      font-style: italic;
+    }
+
+    .star-divider {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0.3;
+    }
+
+    .star-divider::before,
+    .star-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--star-gold);
+    }
+
+    .star-divider span {
+      font-size: 0.7rem;
+      color: var(--star-gold);
+    }
+
+    .bridge {
+      max-width: 760px;
+      margin: 0 auto 2rem;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .bridge-col {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      padding: 1.4rem 1.2rem;
+    }
+
+    .bridge-col h3 {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      margin-bottom: 0.9rem;
+    }
+
+    .bridge-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .bridge-col li {
+      font-size: 0.88rem;
+      color: rgba(240, 244, 247, 0.6);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .bridge-col li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: rgba(245, 230, 176, 0.35);
+    }
+
+    .bridge-arrow {
+      font-size: 1.5rem;
+      color: rgba(245, 230, 176, 0.3);
+      text-align: center;
+    }
+
+    .return-section {
+      text-align: center;
+      padding: 4rem 2rem 8rem;
+    }
+
+    .return-section p {
+      color: rgba(240, 244, 247, 0.4);
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      border: 1px solid rgba(63, 169, 208, 0.4);
+      border-radius: 4px;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .btn-return:hover {
+      background: rgba(63, 169, 208, 0.1);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+
+    .top-buffer-hint {
+      position: fixed;
+      top: 5.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 180;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.7rem;
+      border: 0;
+      background: transparent;
+      color: rgba(245, 230, 176, 0.45);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    .top-buffer-hint .arrow-wrap {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-buffer-hint .arrow {
+      width: 16px;
+      height: 16px;
+      margin-inline: auto;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(225deg);
+    }
+
+    .top-buffer-hint.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .space-buffer-overlay {
+      position: fixed;
+      inset: -10%;
+      z-index: 500;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(0,0,0,0.88) 25%, #000 100%);
+    }
+
+    body.space-buffer-active .space-buffer-overlay {
+      pointer-events: auto;
+      animation: spaceBufferFade 650ms ease forwards;
+    }
+
+    @keyframes spaceBufferFade {
+      0% { opacity: 0; }
+      35% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    body.space-buffer-active {
+      overflow: hidden;
+    }
+
+    @media (max-width: 640px) {
+      .layer-minus-one__content {
+        grid-template-columns: 1fr;
+      }
+
+      .bridge {
+        grid-template-columns: 1fr;
+      }
+
+      .bridge-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-transition-overlay" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a class="header-brand" href="index.html" aria-label="Return to home">
+      <img class="logo-img" src="assets/logo.png" alt="SharkByte Design" />
+      <img class="shark-gif" src="assets/shark.gif" alt="" aria-hidden="true" />
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#home">Surface</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="space-buffer-overlay" aria-hidden="true"></div>
+
+  <button class="top-buffer-hint" id="topBufferHint" type="button" aria-label="Go to the space layer">
+    <span>see what's above the clouds</span>
+    <div class="arrow-wrap">
+      <div class="arrow" aria-hidden="true"></div>
+    </div>
+  </button>
+
+  <!-- DEPTH METER -->
+  <div class="depth-meter" aria-hidden="true">
+    <div class="depth-dot active" data-target="home"></div>
+    <div class="depth-bar"></div>
+    <div class="depth-dot" data-target="about"></div>
+    <div class="depth-bar"></div>
+    <div class="depth-dot" data-target="work"></div>
+    <div class="depth-bar"></div>
+    <div class="depth-dot" data-target="contact"></div>
+  </div>
+
+  <!-- ============================================================
+       LAYER -1: ABOUT SPACE
+  
+  <section class="layer layer-minus-one reveal" id="space-story">
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <div class="layer-minus-one__flip">
+      <div class="space-hero">
+        <div class="nebula-glow" aria-hidden="true"></div>
+        <p class="section-eyebrow" style="margin-bottom: 1.2rem;">UCLA · B.S. Astrophysics · Class of 2026</p>
+        <h1>The Other Side<br/>of the <em>Universe</em></h1>
+        <p class="subtitle">
+          Most designers don't spend their evenings analysing stellar photometry or modelling quantum systems. Here's why that changes everything about how I design.
+        </p>
+        <div class="scroll-hint">
+          <span>Explore</span>
+          <div class="arrow"></div>
+        </div>
+      </div>
+
+      <div class="layer-minus-one__content">
+        <div class="reveal">
+          <p class="section-eyebrow">The Background</p>
+          <h2>Physics by day,<br/>pixels by choice.</h2>
+          <p>
+            Earning a Bachelor of Science in Astrophysics at UCLA meant spending years inside data — astronomical observations, photometric reduction pipelines, Python-based analysis — hunting for signal in enormous amounts of noise. Research experience in quantum physics added a second layer: the discipline of working at the edge of what is currently understood, where the methods matter as much as the findings.
+          </p>
+          <p>
+            Design was never the detour. It was the other current running underneath. <strong>Both disciplines ask the same fundamental question:</strong> how do you take something complex and render it clear?
+          </p>
+        </div>
+
+        <div class="layer-minus-one__card reveal">
+          <p class="section-eyebrow">Research</p>
+          <h2>Observational astronomy<br/>&amp; quantum systems.</h2>
+          <p>
+            Undergraduate research at UCLA spanned two fronts: hands-on observational astronomy — nights at the telescope, photometric reduction, data pipelines — and theoretical work touching the edges of quantum mechanics, where <strong>the rules that govern matter at the smallest scale</strong> start bending in ways that will reshape every industry over the coming decades.
+          </p>
+        </div>
+      </div>
+
+      <div class="star-divider" aria-hidden="true"><span>✦</span></div>
+
+      <div class="reveal" style="margin-top: 3rem;">
+        <div class="bridge">
+          <div class="bridge-col">
+            <h3>Physics gives me</h3>
+            <ul>
+              <li>Rigorous attention to method</li>
+              <li>Comfort with ambiguity</li>
+              <li>Analytical pattern recognition</li>
+              <li>Data-driven decision making</li>
+              <li>Working at the frontier</li>
+            </ul>
+          </div>
+          <div class="bridge-arrow">→</div>
+          <div class="bridge-col">
+            <h3>Design gets</h3>
+            <ul>
+              <li>Layouts that are precise, not accidental</li>
+              <li>Creative confidence under constraints</li>
+              <li>Hierarchy built on logic, not habit</li>
+              <li>Visual choices backed by reasoning</li>
+              <li>Work that pushes the medium</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="star-divider" style="margin-top: 4rem;" aria-hidden="true"><span>✦</span></div>
+
+      <div class="content-section reveal">
+        <p class="section-eyebrow">The Connection</p>
+        <h2>Why it makes the<br/>design sharper.</h2>
+        <p>
+          Physics trains you to distrust shortcuts. When you've spent time verifying that a signal is real and not an artifact of your reduction pipeline, you develop a healthy skepticism of the first answer — in science and in design. The first layout that "works" is rarely the optimal one. The first color that looks fine is rarely the right one.
+        </p>
+        <p>
+          A curious mindset combined with analytical strategy: that's the toolkit. One discipline informs the other, and the result is design that doesn't just look good — it holds up under scrutiny.
+        </p>
+      </div>
+
+      <div class="return-section reveal">
+        <p>Ready to surface?</p>
+        <a class="btn-return" href="#home">← Dive back into the portfolio</a>
+      </div>
+    </div>
+  </section>
+     ============================================================ -->
+  <!-- ============================================================
+       LAYER 0: SURFACE / HOME
+       ============================================================ -->
+  <section id="home" class="layer layer-0">
+
+    <!-- Sunrays -->
+    <div class="sunrays" aria-hidden="true">
+      <div class="ray" style="--from:-18deg;--to:4deg;  --dur:9s; --delay:0s;  transform:rotate(-18deg) translateX(-260px);"></div>
+      <div class="ray" style="--from:-8deg; --to:10deg; --dur:7s; --delay:1s;  transform:rotate(-8deg)  translateX(-130px);"></div>
+      <div class="ray" style="--from:-4deg; --to:8deg;  --dur:8s; --delay:0.5s;transform:rotate(-4deg)  translateX(-30px);"></div>
+      <div class="ray" style="--from:2deg;  --to:14deg; --dur:10s;--delay:2s;  transform:rotate(2deg)   translateX(80px);"></div>
+      <div class="ray" style="--from:8deg;  --to:20deg; --dur:6s; --delay:0.3s;transform:rotate(8deg)   translateX(180px);"></div>
+      <div class="ray" style="--from:16deg; --to:28deg; --dur:11s;--delay:1.5s;transform:rotate(16deg)  translateX(300px);"></div>
+    </div>
+
+    <!-- Bubbles -->
+    <div class="bubble" style="--x:12%;--size:8px; --rise:8s; --delay:0s;  --drift:15px;"></div>
+    <div class="bubble" style="--x:28%;--size:14px;--rise:11s;--delay:2s;  --drift:-20px;"></div>
+    <div class="bubble" style="--x:45%;--size:6px; --rise:7s; --delay:0.5s;--drift:10px;"></div>
+    <div class="bubble" style="--x:62%;--size:10px;--rise:9s; --delay:3s;  --drift:25px;"></div>
+    <div class="bubble" style="--x:78%;--size:16px;--rise:13s;--delay:1s;  --drift:-15px;"></div>
+    <div class="bubble" style="--x:88%;--size:7px; --rise:6s; --delay:4s;  --drift:8px;"></div>
+
+    <div class="hero-text reveal">
+      <img class="hero-shark" src="assets/shark.gif" alt="" aria-hidden="true" />
+      <h1>Dive into what design can look like for you</h1>
+      <p class="tagline">Creative direction · Illustration · UI/UX · Film</p>
+    </div>
+
+    <!-- Wave -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,0 1440,40 L1440,90 L0,90 Z M1440,40 C1620,80 1800,0 1980,40 C2160,80 2340,0 2520,40 C2700,80 2880,0 2880,40 L2880,90 L1440,90 Z" fill="#2d7fa8" />
+      </svg>
+    </div>
+
+    <button class="scroll-hint" id="scrollHint" type="button" aria-label="Move to next section">
+      <span class="scroll-hint-text">Dive in</span>
+      <div class="arrow-wrap">
+        <div class="arrow" aria-hidden="true"></div>
+      </div>
+    </button>
+  </section>
+
+  <!-- ============================================================
+       LAYER 1: ABOUT
+       ============================================================ -->
+  <section id="about">
+
+    <!-- Kelp silhouettes -->
+    <svg class="kelp kelp-left" width="80" height="500" viewBox="0 0 80 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M40,500 Q20,400 50,320 Q80,240 30,160 Q0,80 40,0" stroke="#3fa9d0" stroke-width="4" fill="none"/>
+      <path d="M30,500 Q60,420 20,340 Q-10,260 50,180 Q90,100 40,20" stroke="#3fa9d0" stroke-width="3" fill="none" opacity="0.5"/>
+    </svg>
+    <svg class="kelp kelp-right" width="80" height="500" viewBox="0 0 80 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M40,500 Q20,400 50,320 Q80,240 30,160 Q0,80 40,0" stroke="#3fa9d0" stroke-width="4" fill="none"/>
+    </svg>
+
+    <div class="about-inner reveal">
+      <p class="depth-label">↓ 30 ft below the surface</p>
+      <h2>About Me</h2>
+
+      <p class="about-kicker">CREATION</p>
+      <p>
+        A lifelong command of design expresses itself through visually captivating,
+        purpose-driven work. Every project gets a sharp focus and a fearless
+        approach — adapting swiftly to shifting currents, diving headfirst into
+        new challenges. A relentless pursuit of excellence is what separates these
+        designs from the other fish in the sea.
+      </p>
+
+      <p class="about-kicker" style="margin-top: 2rem;">INNOVATION</p>
+      <p>
+        Being a UCLA Astrophysics graduate tends to raise eyebrows in design
+        rooms — and that's exactly the point. Physics and design share more than
+        most people expect: both demand curiosity, methodical thinking, and elegant
+        solutions to complex problems. The same attention to detail that makes a
+        photometric reduction reliable is what makes a layout land with precision.
+      </p>
+
+
+      <p style="margin-top: 2.5rem;">
+        <span class="about-kicker">Tools</span><br/>
+        <span style="color: rgba(240,244,247,0.65); font-size: 0.95rem;">
+          Adobe Illustrator · Photoshop · Premiere Pro · After Effects · Figma · Python
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LAYER 2: WORK — the seafloor
+       ============================================================ -->
+  <section id="work">
+
+    <!-- Marine snow particles -->
+    <div class="particle" style="--top:5%;  --left:15%; --size:2px; --dur:14s; --delay:0s;  --drift:20px;"></div>
+    <div class="particle" style="--top:2%;  --left:40%; --size:3px; --dur:10s; --delay:2s;  --drift:-15px;"></div>
+    <div class="particle" style="--top:8%;  --left:70%; --size:2px; --dur:16s; --delay:1s;  --drift:30px;"></div>
+    <div class="particle" style="--top:3%;  --left:85%; --size:4px; --dur:12s; --delay:3s;  --drift:-10px;"></div>
+    <div class="particle" style="--top:1%;  --left:55%; --size:2px; --dur:18s; --delay:0.5s;--drift:25px;"></div>
+
+    <div class="seafloor-bg" aria-hidden="true"></div>
+
+    <div class="work-heading reveal">
+      <p class="depth-label">↓ Seafloor — dig in</p>
+      <h2>Work</h2>
+      <p>There's some buried treasure to uncover!</p>
+    </div>
+
+    <div class="buried-grid">
+
+      <a class="buried-card reveal" href="illustrationAndPhotoshop.html" style="transition-delay: 0.1s;">
+        <div class="obj">
+          <div class="obj-icon">
+            <img src="assets/RPGSTREET_Logo.png" alt="Illustration and Photoshop icon" />
+          </div>
+          <div class="obj-label">Illustration &amp; Photoshop</div>
+        </div>
+      </a>
+
+      <a class="buried-card reveal" href="uiux.html" style="transition-delay: 0.2s;">
+        <div class="obj">
+          <div class="obj-icon">
+            <img src="assets/UIUX.gif" alt="UI/UX icon" />
+          </div>
+          <div class="obj-label">UI / UX</div>
+        </div>
+      </a>
+
+      <a class="buried-card reveal" href="filmAndVideo.html" style="transition-delay: 0.3s;">
+        <div class="obj">
+          <div class="obj-icon">
+            <img src="assets/FilmAndVideo.gif" alt="Film and video icon" />
+          </div>
+          <div class="obj-label">Film &amp; Video</div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="sand-strip" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============================================================
+       LAYER 3: CONTACT
+       ============================================================ -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <p class="depth-label">↓ The deep end</p>
+      <h2>Contact</h2>
+      <p>Let's surface something new together.</p>
+
+      <form class="contact-form" id="contactForm">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn-send">Send it up</button>
+      </form>
+
+      <div class="contact-links">
+        <a href="mailto:you@example.com">Email</a>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> SharkByte Design — All rights reserved</p>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mainNav.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 760) {
+            mainNav.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+
+    // Contact form placeholder
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert("Form isn't connected yet — wire it up to Formspree, Netlify Forms, or your own backend.");
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const scrollHint = document.getElementById('scrollHint');
+    const hintText = scrollHint ? scrollHint.querySelector('.scroll-hint-text') : null;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    // Work-card labels reveal on hover/focus and on first tap on touch devices
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const workCards = document.querySelectorAll('.buried-card');
+
+    workCards.forEach(card => {
+      card.addEventListener('click', (event) => {
+        if (!isTouchDevice) return;
+
+        if (!card.classList.contains('is-active')) {
+          event.preventDefault();
+          card.classList.add('is-active');
+          card.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (isTouchDevice) {
+          card.classList.remove('is-active');
+          card.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Depth meter
+    const sections = ['home', 'about', 'work', 'contact'];
+    const dots = document.querySelectorAll('.depth-dot');
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    const sectionIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const idx = sections.indexOf(e.target.id);
+          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) sectionIO.observe(el);
+    });
+
+    // Scroll hint
+    if (scrollHint && hintText) {
+      let activeIndex = 0;
+
+      const setHintState = (index) => {
+        activeIndex = index;
+
+        if (index === 0) {
+          hintText.textContent = 'Dive in';
+          hintText.classList.remove('hidden');
+          scrollHint.classList.remove('up');
+        } else if (index === sections.length - 1) {
+          hintText.textContent = 'Surface';
+          hintText.classList.remove('hidden');
+          scrollHint.classList.add('up');
+        } else {
+          hintText.classList.add('hidden');
+          scrollHint.classList.remove('up');
+        }
+      };
+
+      scrollHint.addEventListener('click', () => {
+        const nextIndex = activeIndex === sections.length - 1 ? 0 : activeIndex + 1;
+        document.getElementById(sections[nextIndex])?.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      const sectionIOHint = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            setHintState(sections.indexOf(e.target.id));
+          }
+        });
+      }, { threshold: 0.45 });
+
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) sectionIOHint.observe(el);
+      });
+    }
+
+    // Starfield animation for about-space layer
+    const starfield = document.getElementById('starfield');
+    if (starfield) {
+      const ctx = starfield.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      let W = 0;
+      let H = 0;
+      let stars = [];
+
+      function resizeStarfield() {
+        W = starfield.width = Math.round(window.innerWidth * dpr);
+        H = starfield.height = Math.round(window.innerHeight * dpr);
+        starfield.style.width = window.innerWidth + 'px';
+        starfield.style.height = window.innerHeight + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        stars = Array.from({ length: 220 }, () => ({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: Math.random() * 1.4 + 0.3,
+          base: Math.random() * 0.7 + 0.2,
+          phase: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.4 + 0.2,
+          gold: Math.random() < 0.08
+        }));
+      }
+
+      function drawStarfield(t) {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        stars.forEach(s => {
+          const alpha = s.base + Math.sin(t * s.speed + s.phase) * 0.25;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = s.gold
+            ? `rgba(245,230,176,${alpha})`
+            : `rgba(200,220,240,${alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStarfield);
+      }
+
+      window.addEventListener('resize', resizeStarfield);
+      resizeStarfield();
+      requestAnimationFrame(drawStarfield);
+    }
+
+    const homeSection = document.getElementById('home');
+    const homeScrollHint = document.getElementById('scrollHint');
+    const topBufferHint = document.getElementById('topBufferHint');
+    const headerShark = document.querySelector('.header-brand .shark-gif');
+
+    if (headerShark && homeSection) {
+      const headerSharkObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          headerShark.classList.toggle('is-hidden', entry.isIntersecting);
+        });
+      }, { threshold: 0.6 });
+
+      headerSharkObserver.observe(homeSection);
+    }
+
+    if (homeSection && homeScrollHint) {
+      const homeHintObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          homeScrollHint.classList.toggle('is-hidden', !entry.isIntersecting);
+        });
+      }, { threshold: 0.6 });
+
+      homeHintObserver.observe(homeSection);
+    }
+
+    if (!location.hash && homeSection) {
+      history.replaceState(null, '', `${location.pathname}#home`);
+    }
+
+    if (topBufferHint) {
+      topBufferHint.addEventListener('click', () => {
+        document.body.classList.add('space-buffer-active');
+        window.setTimeout(() => {
+          window.location.href = 'about-space.html';
+        }, 420);
+      });
+    }
+  </script>
+
+</body>
+</html>

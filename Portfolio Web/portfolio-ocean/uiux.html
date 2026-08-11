@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI / UX | SharkByte Design</title>
+  <meta name="description" content="UI / UX work by SharkByte Design." />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+
+    .content-section,
+    .bridge,
+    .return-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+
+    .content-section h2 {
+      font-family: var(--font-ui);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--star-gold);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .content-section p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(240, 244, 247, 0.72);
+      margin-bottom: 1.2rem;
+    }
+
+    .content-section p strong {
+      color: var(--white);
+      font-weight: normal;
+      font-style: italic;
+    }
+
+    .star-divider {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0.3;
+    }
+
+    .star-divider::before,
+    .star-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--star-gold);
+    }
+
+    .star-divider span {
+      font-size: 0.7rem;
+      color: var(--star-gold);
+    }
+
+    .bridge {
+      max-width: 760px;
+      margin: 0 auto 2rem;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .bridge-col {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      padding: 1.4rem 1.2rem;
+    }
+
+    .bridge-col h3 {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      margin-bottom: 0.9rem;
+    }
+
+    .bridge-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .bridge-col li {
+      font-size: 0.88rem;
+      color: rgba(240, 244, 247, 0.6);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .bridge-col li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: rgba(245, 230, 176, 0.35);
+    }
+
+    .bridge-arrow {
+      font-size: 1.5rem;
+      color: rgba(245, 230, 176, 0.3);
+      text-align: center;
+    }
+
+    .return-section {
+      text-align: center;
+      padding: 4rem 2rem 8rem;
+    }
+
+    .return-section p {
+      color: rgba(240, 244, 247, 0.4);
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      border: 1px solid rgba(63, 169, 208, 0.4);
+      border-radius: 4px;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .btn-return:hover {
+      background: rgba(63, 169, 208, 0.1);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+
+    @media (max-width: 640px) {
+      .layer-minus-one__content {
+        grid-template-columns: 1fr;
+      }
+
+      .bridge {
+        grid-template-columns: 1fr;
+      }
+
+      .bridge-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <a class="header-brand" href="index.html" aria-label="Return to home">
+      <img class="logo-img" src="assets/logo.png" alt="SharkByte Design" />
+      <img class="shark-gif" src="assets/shark.gif" alt="" aria-hidden="false" />
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html#home">Surface</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li class="dropdown-parent">
+          <a href="index.html#work" class="dropdown-toggle">Work <span class="work-caret" aria-hidden="true">▴</span></a>
+          <!-- Actual Dropdown Menu -->
+          <ul class="dropdown-menu">
+            <li><a href="illustrationAndPhotoshop.html">Illustration &amp; Photoshop</a></li>
+            <li><a href="uiux.html">UI/UX</a></li>
+            <li><a href="filmAndVideo.html">Film &amp; Video</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="content-section reveal">
+      <p class="section-eyebrow">Work</p>
+      <h2>UI / UX</h2>
+      <p>
+        These treasures are incredibly interactive!
+      </p>
+
+      <section class="work-slab">
+        <div class="work-grid">
+          <article class="work-card reveal">
+            <div class="work-card__image">
+              <span class="work-card__placeholder">Project One</span>
+            </div>
+            <div class="work-card__body">
+              <span class="work-card__label">Case Study</span>
+              <h3>Project One</h3>
+              <p>Capture the goal, process, and final outcome for a UX or interface feature.</p>
+              <a class="work-card__link" href="#">Read project</a>
+            </div>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="work-card__image">
+              <span class="work-card__placeholder">Project Two</span>
+            </div>
+            <div class="work-card__body">
+              <span class="work-card__label">Case Study</span>
+              <h3>Project Two</h3>
+              <p>Describe the challenge, discovery work, and polished interaction details.</p>
+              <a class="work-card__link" href="#">Read project</a>
+            </div>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="work-card__image">
+              <span class="work-card__placeholder">Project Three</span>
+            </div>
+            <div class="work-card__body">
+              <span class="work-card__label">Case Study</span>
+              <h3>Project Three</h3>
+              <p>Use this block to publish the next UX deliverable with a concise narrative.</p>
+              <a class="work-card__link" href="#">Read project</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> SharkByte Design 2026</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const dropdownParent = document.querySelector('.dropdown-parent');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mainNav.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mainNav.querySelectorAll('a').forEach(link => {
+        if (link.classList.contains('dropdown-toggle')) {
+          return;
+        }
+
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 760) {
+            mainNav.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+
+    if (dropdownParent && dropdownToggle) {
+      dropdownToggle.setAttribute('aria-haspopup', 'true');
+      dropdownToggle.setAttribute('aria-expanded', 'false');
+
+      dropdownToggle.addEventListener('click', (event) => {
+        if (window.innerWidth > 760) return;
+
+        event.preventDefault();
+        const isOpen = dropdownParent.classList.toggle('is-open');
+        dropdownToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
